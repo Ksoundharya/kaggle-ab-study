@@ -1,8 +1,7 @@
 # Final Report
 
-Full narrative results are in `task1/REPORT.md` and `task2/README.md`; this
-file is the cross-cutting summary, the requirement traceability matrix, and
-the final self-audit against the assignment's own checklist.
+Full narrative results are in `REPORT.md`; this file is the summary,
+requirement traceability matrix, and final self-audit for the study.
 
 **Revision note:** Task 1's implementation and report were revised after an
 external technical review identified a real preprocessing-leakage bug and
@@ -12,9 +11,8 @@ by hand. A second follow-up review caught 5 smaller remaining issues (a
 literal-zero Wilcoxon p-value, an imprecise dependency-compatibility claim,
 an imprecise "identical pipelines" statement, a missing threats-to-validity
 discussion, and figure-reference completeness), all fixed in this version.
-See `task1/REPORT.md`'s "Changes from the first version" section for the
-full list from both rounds. Task 2 was not affected by either review and is
-unchanged.
+See `REPORT.md`'s "Changes from the first version" section for the full list
+from both rounds.
 
 ## Executive summary
 
@@ -33,15 +31,6 @@ CI of [63,339, 200,530], and raises R² from 0.569 to 0.899. The improvement
 is stable across 5 independent dev/test splits, ranging from 34.7% to
 53.1% RMSE reduction in B's favor every time — never small, never
 reversed.
-
-**Task 2** generated exactly 5,000 JSON flight-data files (376,624 records,
-K=181 cities, configured dirty probability 0.5557%) under a documented,
-collision-free folder hierarchy, streamed them through a cleaning/analysis
-pipeline in 1.43 seconds without holding more than one file in memory at a
-time, and verified every required invariant programmatically: the
-Top-25-by-arriving-passengers ranking, exact AVG/P95 flight duration, and
-the passenger-balance conservation invariant (Σ balances = 0, exactly). All
-29 automated tests pass.
 
 ## Requirement Traceability Matrix
 
@@ -66,31 +55,8 @@ the passenger-balance conservation invariant (Σ balances = 0, exactly). All
 | T1-15 | Computational cost | Train/inference time | `time.perf_counter` around fit/predict | Measured, reported | `outputs/final_ab_results.json` | DONE |
 | T1-16 | Final results table + honest conclusion | No forced positive result | REPORT.md §6, §11 | — | `task1/REPORT.md` | DONE |
 | T1-17 | Hyperparameter search aligned with primary metric | Search should optimize the same metric the final report headlines | Custom dollar-space RMSE scorer (`models.py::dollar_rmse_scorer`) replaces the log-space default scorer | Search re-run and re-verified with the new scorer | `src/models.py`, `outputs/ablation_cv.json` | DONE (added post-review; previously an undisclosed metric-space mismatch) |
-| T1-18 | Reproducibility: pinned versions, recorded environment | Exact installed versions, not guessed; Python-version compatibility claims scoped correctly per task | `task1/requirements.txt` pinned to the modern stack Task 1 actually uses (Python 3.11.15); `task2/requirements.txt` kept stdlib-only to satisfy the assignment's Python 3.7+ requirement, which applies to Task 2, not Task 1; `run_experiment.py` records `platform`/`numpy`/`pandas`/`sklearn`/`scipy` versions programmatically | Environment file written every run | `task1/requirements.txt`, `task2/requirements.txt`, `outputs/environment.json` | DONE (added post-review; split by task after a follow-up review flagged the single combined file as misleading) |
+| T1-18 | Reproducibility: pinned versions, recorded environment | Exact installed versions, not guessed; the environment is recorded programmatically | `requirements.txt` pins the modern scientific stack used by this study; `run_experiment.py` records `platform`/`numpy`/`pandas`/`sklearn`/`scipy` versions programmatically | Environment file written every run | `requirements.txt`, `outputs/environment.json` | DONE |
 | T1-19 | No p-value should be reported as a literal, unqualified 0 | Distinguish a genuine floating-point underflow from a claim of exact zero probability | `evaluation.py::wilcoxon_on_paired_absolute_errors` now returns `p_value_raw`, `p_value_underflowed`, and `p_value_report` ("< machine precision") instead of a bare `p_value: 0.0` | Verified the underflow is genuine (not a bug) via an independent hand-computation of the normal-approximation z-score and its log-survival-function | `outputs/final_ab_results.json`, `task1/REPORT.md` §6 | DONE (added after a follow-up review) |
-
-### Task 2
-
-*(unchanged by the Task 1 review; table repeated from the prior version)*
-
-| Req ID | Original Requirement | Interpretation | Implementation | Validation | Artifact | Status |
-|---|---|---|---|---|---|---|
-| T2-1 | ~5,000 JSON files, structured hierarchy | Exactly 5,000; nested by month-year/city | `generate_flights.py::generate` | File count assertion in validation suite | `/tmp/flights/`, `generation_manifest.json` | DONE |
-| T2-2 | K cities in [100,200], M records/file in [50,100] | Randomized within spec, seeded | `config.py`, `generate_flights.py` | Range checks in tests + validation suite | `tests/test_generator.py`, `outputs/analysis_report.json` | DONE |
-| T2-3 | Filename pattern with MM-YY/origin_city | Analyze collision risk explicitly, resolve safely | Sequence-numbered, city-nested filenames | Uniqueness test on 400 generated files | `generate_flights.py` module docstring, `README.md` | DONE (documented deviation, justified) |
-| T2-4 | Dirty records at L∈[0.5%,1%], NULL fields | Independent per-record Bernoulli injection | `maybe_make_dirty` | Observed fraction + Wilson CI checked against configured L | `outputs/analysis_report.json` | DONE |
-| T2-5 | Process all files, identify/clean dirty records | Quarantine policy, not imputation | `analyze_flights.py::process_all_files` | Dirty/invalid/valid counts reconciled to total | `outputs/analysis_report.json` | DONE |
-| T2-6 | Report counts + runtime in ms | `time.perf_counter` around timed section | `analyze_flights.py::main` | Real measured runtime | `outputs/analysis_report.json` | DONE |
-| T2-7 | Streaming architecture, no full in-memory load | Per-file streaming, O(cities) aggregates + justified exception for exact P95 | `analyze_flights.py` | Complexity analysis in module docstring | `analyze_flights.py` | DONE |
-| T2-8 | Top 25 by arriving passengers, AVG/P95 duration | Explicit ranking key, percentile definition documented | `top_25_destinations` | Unit test with constructed counterexample (passengers≠flight-count ranking) | `tests/test_analysis.py::test_top_25_ranks_by_passengers_not_flight_count` | DONE |
-| T2-9 | Passenger balance, max/min city | 0-initialized, updated per valid flight | `passenger_balance_extremes` | Hand-computed 3-city unit test | `tests/test_analysis.py::test_process_all_files_conservation_and_counts` | DONE |
-| T2-10 | Conservation invariant, investigate if it fails | Automated check, not asserted a priori | `run_validation_suite` | Executed on real 374,535-record run: holds exactly | `outputs/analysis_report.json` | DONE |
-| T2-11 | Data quality validation suite | File count, schema, ranges, ranking correctness, balance | `run_validation_suite` + full test suite | 29 automated tests, all pass; validation suite all-pass on real run | `tests/`, `outputs/analysis_report.json` | DONE |
-| T2-12 | Extended statistics (mean/median/stdev/IQR/percentiles/skew/CV, dirty-rate Wilson CI, concentration/HHI) | Dependency-free stats module | `statistics.py`, `extended_statistics`, `traffic_concentration` | Computed on real data; unit-tested against hand-computed cases | `outputs/analysis_report.json`, `tests/test_analysis.py` | DONE |
-| T2-13 | Automated tests incl. edge cases | Generator + analysis test suites | `tests/test_generator.py`, `tests/test_analysis.py` | 29/29 pass | `tests/` | DONE |
-| T2-14 | Python 3.7+ compatible, stdlib-first | No 3.8+-only syntax, no unneeded deps | Checked via `ast.parse`; only `pytest` as a dev dependency | Manual grep for `:=`/`match` + AST parse | this file | DONE |
-| T2-15 | Failure handling: malformed JSON, missing/wrong-type fields | try/except per file, per-field type checks | `process_all_files`, `models.py::validate_clean_record` | Unit test with deliberately corrupt JSON file | `tests/test_analysis.py::test_malformed_json_file_is_quarantined_not_fatal` | DONE |
-| T2-16 | Reproducibility, deterministic seed | Same seed → byte-identical output | `random.Random(seed)`, no shared global state | Unit test comparing two seeded runs' files byte-for-byte | `tests/test_generator.py::test_deterministic_seed_reproducibility` | DONE |
 
 ## Final Quality Gate — self-audit against the assignment's checklist
 
@@ -106,23 +72,8 @@ the passenger-balance conservation invariant (Σ balances = 0, exactly). All
 - [x] Ablation study completed — B0 through B3, with B1 decomposed into B1a-B1d feature-family stages so the largest single gain (zipcode encoding) is evidenced, not asserted.
 - [x] Error analysis completed — 16 subgroup slices, real numbers, now plotted.
 - [x] Model diagnostics completed — residual mean/std/skew, heteroscedasticity check, worst-case errors, now plotted (actual-vs-predicted, residual histograms, residuals-vs-prediction).
-- [x] Approximately 5,000 JSON files generated — exactly 5,000.
-- [x] 50–100 records/file — enforced by generator, unit-tested.
-- [x] 100–200 cities — K=181 in the real run.
-- [x] 0.5–1% dirty probability — configured L=0.5557%, observed 0.5547% (Wilson CI contains L).
-- [x] Required JSON schema followed — exact field names/types per spec.
-- [x] Total records reported — 376,624.
-- [x] Dirty records reported — 2,089, plus per-field breakdown.
-- [x] Analysis runtime reported in milliseconds — 1,428.8 ms via `time.perf_counter`.
-- [x] Top 25 ranked by arriving PASSENGERS — verified with a constructed counterexample unit test, not just by inspection.
-- [x] AVG duration calculated — per destination, real data.
-- [x] P95 duration calculated — exact (not approximated), with the reasoning for exactness documented.
-- [x] Maximum passenger-balance city reported — Columbus GA, +144,609.
-- [x] Minimum passenger-balance city reported — Wichita, −139,144.
-- [x] Global passenger balance = 0 — verified exactly (0.0), not approximately.
-- [x] Unit tests pass — Task 2: 29/29 (`task2/tests/`); Task 1: 8/8 (`task1/tests/test_task1.py`, added after a follow-up review, covering the leakage-safe transformer, the group split, the Monte Carlo p-value correction, and paired-metric length validation), on top of Task 1's broader validation by full re-execution and cross-checked artifacts.
-- [x] Python 3.7 compatibility checked — AST-parsed, no 3.8+-only syntax, stdlib-only runtime for Task 2.
-- [x] README contains reproducible commands — top-level `README.md` plus per-task READMEs; dependency versions pinned per task (`task1/requirements.txt` for the modern scientific stack Task 1 actually used; `task2/requirements.txt` stdlib-only) rather than one combined file that would have wrongly implied a single Python-version compatibility claim covering both tasks.
+- [x] Unit tests pass — 8/8 targeted tests covering the leakage-safe transformer, group split, p-value correction, and paired-metric validation.
+- [x] README contains reproducible commands and pinned dependencies.
 - [x] No p-value reported as a literal, unqualified 0 — the Wilcoxon test's underflowed `0.0` is now reported with an explicit `p_value_underflowed` flag and a `p_value_report: "< machine precision"` string, with the underflow independently verified (not assumed) via a hand-computed z-score check.
 - [x] Threats to Validity documented — `task1/REPORT.md` §12 covers external validity, baseline fidelity, split sensitivity, hyperparameter-search scope, interpretability scope, and the statistical-independence assumption.
 - [x] Every figure referenced in the report — verified programmatically (all 9 filenames in `outputs/figures/` appear in `task1/REPORT.md`).
@@ -134,4 +85,4 @@ the passenger-balance conservation invariant (Σ balances = 0, exactly). All
 1. **Baseline notebook internals** could not be scraped (Kaggle SPA rendering) — the implementation is explicitly labeled a "reference-aligned baseline" rather than a "reproduction" for exactly this reason. See T1-1, T1-5.
 2. **SHAP was not used**; permutation importance was used instead, to avoid adding a heavy dependency (both are model-agnostic, post-hoc importance measures; SHAP's additional value — additive per-prediction attribution — was not required by the specific interpretability questions asked). The report now explicitly scopes this ranking to the final model B and does not use it to explain the ablation's feature-family gain (that evidence comes from the ablation itself). See T1-13.
 3. **Nested cross-validation** was not used for the final A/B comparison, by design: the final comparison is a single locked hold-out (not a CV estimate), so nesting does not apply there; hyperparameter search for B3 used its own 3-fold (not 5-fold) GroupKFold purely to bound wall-clock time in this sandboxed environment, with the winning configuration re-validated under the full 5-fold protocol before being compared to anything else.
-4. **Task 1 now has a small, targeted unit-test suite** (`task1/tests/test_task1.py`, 8 tests, added after a second follow-up review) covering exactly the design claims where a subtle bug would be dangerous and easy to miss by inspection: that `HouseFeatureEngineer.transform()` genuinely does not learn anything from the data it's transforming (only from `.fit()`), that the group-aware split has zero house-id overlap and is seed-deterministic, that the Monte Carlo p-value correction never returns an unqualified zero (and behaves sensibly at the 0%/50%/100%-exceedance boundaries), and that the paired A/B metric functions fail loudly rather than silently misaligning mismatched-length predictions. It is deliberately not a large suite (unlike Task 2's 29 tests, which validate a much larger surface of file-format and streaming-aggregation logic) — Task 1's broader correctness argument still rests primarily on the leakage assertion in `run_experiment.py`, the disjoint-id check, and full re-execution producing internally consistent numbers across the ablation, final test, diagnostics, and robustness artifacts.
+4. **The project has a small, targeted unit-test suite** (`tests/test_task1.py`, 8 tests, added after a second follow-up review) covering exactly the design claims where a subtle bug would be dangerous and easy to miss by inspection: that `HouseFeatureEngineer.transform()` genuinely does not learn anything from the data it's transforming (only from `.fit()`), that the group-aware split has zero house-id overlap and is seed-deterministic, that the Monte Carlo p-value correction never returns an unqualified zero (and behaves sensibly at the 0%/50%/100%-exceedance boundaries), and that the paired A/B metric functions fail loudly rather than silently misaligning mismatched-length predictions. The broader correctness argument rests primarily on the leakage assertion in `run_experiment.py`, the disjoint-id check, and full re-execution producing internally consistent numbers across the ablation, final test, diagnostics, and robustness artifacts.

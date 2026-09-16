@@ -436,12 +436,9 @@ but not independently verified here.
     we now report that explicitly (`p_value_raw`, `p_value_underflowed:
     true`, `p_value_report: "< machine precision"`) rather than leaving a
     number that reads as an exact zero (§6).
-13. **Split dependency files by task**: `task1/requirements.txt` (pinned
-    to the modern scientific-Python stack Task 1 actually used, Python
-    3.11.15) and `task2/requirements.txt` (stdlib-only, satisfying the
-    assignment's explicit Python 3.7+ requirement for Task 2). The
-    previous single top-level `requirements.txt` incorrectly implied one
-    environment covered both tasks' compatibility claims.
+13. **Pinned the dependency file** to the modern scientific-Python stack
+   used by this study and recorded the exact runtime environment in
+   `outputs/environment.json`.
 14. **Corrected an imprecise "identical pipelines" claim** in the
     top-level quality gate: A and B intentionally use *different* feature
     pipelines (raw vs. engineered features), because feature engineering

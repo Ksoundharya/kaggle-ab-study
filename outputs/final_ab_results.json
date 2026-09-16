@@ -1,0 +1,79 @@
+{
+  "final_metrics_A": {
+    "rmse": 232823.33278733565,
+    "mae": 111692.20670335936,
+    "r2": 0.5686908879220893,
+    "mape_pct": 20.136369613048895
+  },
+  "final_metrics_B": {
+    "rmse": 114568.87866200645,
+    "mae": 62266.6372460457,
+    "r2": 0.8955594969708975,
+    "mape_pct": 11.785923704123965
+  },
+  "ab_test": {
+    "metric_comparisons": {
+      "rmse": {
+        "metric_a": 232823.33278733565,
+        "metric_b": 114568.87866200645,
+        "abs_delta": 118254.4541253292,
+        "relative_delta_pct": 50.791496157021605,
+        "bootstrap_ci_95": [
+          60797.2121275212,
+          199051.88623675256
+        ],
+        "n_bootstrap": 5000,
+        "permutation_test": {
+          "observed_delta": 118254.4541253292,
+          "p_value": 0.0001999600079984003,
+          "n_permutations": 5000
+        }
+      },
+      "mae": {
+        "metric_a": 111692.20670335936,
+        "metric_b": 62266.6372460457,
+        "abs_delta": 49425.569457313664,
+        "relative_delta_pct": 44.25158291355263,
+        "bootstrap_ci_95": [
+          45459.49144714018,
+          54249.46205489619
+        ],
+        "n_bootstrap": 5000,
+        "permutation_test": {
+          "observed_delta": 49425.569457313664,
+          "p_value": 0.0001999600079984003,
+          "n_permutations": 5000
+        }
+      },
+      "r2": {
+        "metric_a": 0.5686908879220893,
+        "metric_b": 0.8955594969708975,
+        "abs_delta": 0.3268686090488082,
+        "relative_delta_pct": 57.47737760369905,
+        "bootstrap_ci_95": [
+          0.14109219499801293,
+          0.7025320462397187
+        ],
+        "n_bootstrap": 5000,
+        "permutation_test": {
+          "observed_delta": 0.3268686090488082,
+          "p_value": 0.0001999600079984003,
+          "n_permutations": 5000
+        }
+      }
+    },
+    "paired_absolute_error_test": {
+      "test": "Wilcoxon signed-rank",
+      "statistic": 4576229.5,
+      "p_value_raw": 0.0,
+      "p_value_underflowed": true,
+      "p_value_report": "< machine precision (scipy reported an exact 0.0; true p-value is nonzero but unrepresentable at double precision)",
+      "n_paired_obs": 6485
+    }
+  },
+  "train_time_sec_A": 0.059648299999992105,
+  "train_time_sec_B": 0.9288491999999451,
+  "inference_time_sec_B_full_test_set": 0.05839570000000549,
+  "n_test_rows": 6485,
+  "n_dev_rows": 15128
+}

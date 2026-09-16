@@ -1,0 +1,82 @@
+{
+  "method": "permutation_importance (neg_root_mean_squared_error drop), n_repeats=5, 1500-row test subsample, seed=42",
+  "compute_time_sec": 3.3464541999999824,
+  "ranking": [
+    {
+      "feature": "lat",
+      "importance_mean_rmse_increase": 0.28020105619010716
+    },
+    {
+      "feature": "sqft_living",
+      "importance_mean_rmse_increase": 0.09986009375912988
+    },
+    {
+      "feature": "grade",
+      "importance_mean_rmse_increase": 0.07533900106198903
+    },
+    {
+      "feature": "sqft_lot",
+      "importance_mean_rmse_increase": 0.03383451176107523
+    },
+    {
+      "feature": "zipcode (aggregated over 70 dummies)",
+      "importance_mean_rmse_increase": 0.02531872602054231
+    },
+    {
+      "feature": "long",
+      "importance_mean_rmse_increase": 0.02496021221138109
+    },
+    {
+      "feature": "view",
+      "importance_mean_rmse_increase": 0.015222722455101196
+    },
+    {
+      "feature": "yr_built",
+      "importance_mean_rmse_increase": 0.012951295735176633
+    },
+    {
+      "feature": "sqft_living15",
+      "importance_mean_rmse_increase": 0.012361610535947115
+    },
+    {
+      "feature": "condition",
+      "importance_mean_rmse_increase": 0.009225681930670132
+    },
+    {
+      "feature": "date",
+      "importance_mean_rmse_increase": 0.006101266793585835
+    },
+    {
+      "feature": "sqft_above",
+      "importance_mean_rmse_increase": 0.00514552511721143
+    },
+    {
+      "feature": "waterfront",
+      "importance_mean_rmse_increase": 0.005112285709766323
+    },
+    {
+      "feature": "bathrooms",
+      "importance_mean_rmse_increase": 0.0027223762283687726
+    },
+    {
+      "feature": "sqft_basement",
+      "importance_mean_rmse_increase": 0.002069730287955168
+    },
+    {
+      "feature": "yr_renovated",
+      "importance_mean_rmse_increase": 0.0019973785960323174
+    },
+    {
+      "feature": "sqft_lot15",
+      "importance_mean_rmse_increase": 0.0019657506754238497
+    },
+    {
+      "feature": "bedrooms",
+      "importance_mean_rmse_increase": 0.000945189053750567
+    },
+    {
+      "feature": "floors",
+      "importance_mean_rmse_increase": 0.000221371032928791
+    }
+  ]
+}

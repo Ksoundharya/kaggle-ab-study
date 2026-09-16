@@ -1,0 +1,114 @@
+[
+  {
+    "segment": "grade<=6 (below average)",
+    "n": 718,
+    "rmse_A": 95519.77828348531,
+    "rmse_B": 72760.07413720945,
+    "delta_rmse_A_minus_B": 22759.704146275864
+  },
+  {
+    "segment": "grade=7 (average)",
+    "n": 2715,
+    "rmse_A": 109674.00886546205,
+    "rmse_B": 69455.32597139264,
+    "delta_rmse_A_minus_B": 40218.68289406941
+  },
+  {
+    "segment": "grade 8-9 (good)",
+    "n": 2599,
+    "rmse_A": 182677.73994130624,
+    "rmse_B": 102468.85530749979,
+    "delta_rmse_A_minus_B": 80208.88463380645
+  },
+  {
+    "segment": "grade>=10 (excellent/luxury)",
+    "n": 453,
+    "rmse_A": 705686.0125476894,
+    "rmse_B": 300605.5387208801,
+    "delta_rmse_A_minus_B": 405080.47382680926
+  },
+  {
+    "segment": "no waterfront",
+    "n": 6442,
+    "rmse_A": 227928.73498004905,
+    "rmse_B": 107830.09351807222,
+    "delta_rmse_A_minus_B": 120098.64146197683
+  },
+  {
+    "segment": "waterfront",
+    "n": 43,
+    "rmse_A": 626152.1716161651,
+    "rmse_B": 487495.675591542,
+    "delta_rmse_A_minus_B": 138656.4960246231
+  },
+  {
+    "segment": "built <20y before sale",
+    "n": 1655,
+    "rmse_A": 352435.69113970594,
+    "rmse_B": 125119.69861677234,
+    "delta_rmse_A_minus_B": 227315.9925229336
+  },
+  {
+    "segment": "built 20-50y before sale",
+    "n": 2169,
+    "rmse_A": 175390.35105114075,
+    "rmse_B": 109297.6423270725,
+    "delta_rmse_A_minus_B": 66092.70872406824
+  },
+  {
+    "segment": "built 50y+ before sale",
+    "n": 2661,
+    "rmse_A": 172562.88191369272,
+    "rmse_B": 111870.68476920524,
+    "delta_rmse_A_minus_B": 60692.19714448748
+  },
+  {
+    "segment": "price < $300k",
+    "n": 1361,
+    "rmse_A": 76206.82428886378,
+    "rmse_B": 51115.11585557472,
+    "delta_rmse_A_minus_B": 25091.70843328906
+  },
+  {
+    "segment": "$300k-$600k",
+    "n": 3224,
+    "rmse_A": 93419.86756000521,
+    "rmse_B": 60866.36186979859,
+    "delta_rmse_A_minus_B": 32553.50569020662
+  },
+  {
+    "segment": "$600k-$1M",
+    "n": 1474,
+    "rmse_A": 193388.94962404613,
+    "rmse_B": 106481.4865985876,
+    "delta_rmse_A_minus_B": 86907.46302545854
+  },
+  {
+    "segment": "price > $1M",
+    "n": 426,
+    "rmse_A": 781780.8396507396,
+    "rmse_B": 352421.76635880925,
+    "delta_rmse_A_minus_B": 429359.0732919303
+  },
+  {
+    "segment": "condition 1-2 (poor)",
+    "n": 70,
+    "rmse_A": 163939.9189796497,
+    "rmse_B": 119750.40636808272,
+    "delta_rmse_A_minus_B": 44189.51261156697
+  },
+  {
+    "segment": "condition 3 (average)",
+    "n": 4154,
+    "rmse_A": 259052.4232261857,
+    "rmse_B": 111434.48386954187,
+    "delta_rmse_A_minus_B": 147617.93935664382
+  },
+  {
+    "segment": "condition 4-5 (good/very good)",
+    "n": 2261,
+    "rmse_A": 177058.68546791238,
+    "rmse_B": 119957.95026905573,
+    "delta_rmse_A_minus_B": 57100.73519885665
+  }
+]

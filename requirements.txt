@@ -1,0 +1,20 @@
+# Task 1 ONLY (Kaggle ML + statistical A/B testing).
+#
+# Task 1 was executed and validated using Python 3.11.15 (recorded
+# programmatically, not guessed, in outputs/environment.json on every run)
+# with the pinned scientific-Python versions below. This is intentionally
+# NOT a Python 3.7 environment: Task 1 has no stated Python-version
+# constraint in the assignment, and scikit-learn/pandas/numpy at these
+# pinned versions require a modern Python. The assignment's explicit
+# "Python 3.7+" requirement applies to Task 2, which is implemented with
+# zero third-party runtime dependencies for exactly that reason -- see
+# task2/requirements.txt and task2/README.md.
+#
+# Versions pinned to what was actually installed and used to produce the
+# numbers in task1/outputs/.
+numpy==2.4.4
+pandas==3.0.2
+scikit-learn==1.8.0
+scipy==1.17.1
+matplotlib==3.10.9
+pytest==9.1.1

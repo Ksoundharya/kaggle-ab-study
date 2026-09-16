@@ -3,6 +3,22 @@
 See `FINAL_REPORT.md` for the full technical report, requirement
 traceability matrix, and final quality-gate self-audit.
 
+## Project Overview
+
+This project studies the **King County House Price Prediction** problem by
+comparing a reference Kaggle Ordinary Least Squares baseline with an improved
+Gradient Boosting model. Rather than only comparing model scores, the
+experiment prevents data leakage, keeps a separate locked test set, uses the
+same data splits for both models, and evaluates each improvement incrementally
+through an ablation study.
+
+The analysis uses paired bootstrap confidence intervals, permutation testing,
+Wilcoxon testing, error analysis, residual diagnostics, feature importance,
+and multiple random-seed experiments to assess whether the improvement is
+consistent and statistically meaningful. The project also includes
+visualizations, automated tests, fixed random seeds, and pinned dependencies
+so the results can be reproduced and verified.
+
 ```
 project/
 ├── README.md                  (this file)
